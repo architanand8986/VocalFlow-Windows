@@ -25,12 +25,12 @@ Powered by **[Deepgram](https://deepgram.com)** for real-time speech-to-text and
 
 ## Requirements
 
-| Requirement | Details |
-|-------------|---------|
-| OS | Windows 10 or Windows 11 |
-| Node.js | v18 or later — [nodejs.org](https://nodejs.org) |
+| Requirement      | Details                                                                                  |
+| ---------------- | ---------------------------------------------------------------------------------------- |
+| OS               | Windows 10 or Windows 11                                                                 |
+| Node.js          | v18 or later — [nodejs.org](https://nodejs.org)                                          |
 | Deepgram API key | Free tier available — [console.deepgram.com/signup](https://console.deepgram.com/signup) |
-| Groq API key | Optional, for post-processing — [console.groq.com](https://console.groq.com) |
+| Groq API key     | Optional, for post-processing — [console.groq.com](https://console.groq.com)             |
 
 ---
 
@@ -39,18 +39,20 @@ Powered by **[Deepgram](https://deepgram.com)** for real-time speech-to-text and
 ### Step 1 — Get the code
 
 **Option A — Git clone:**
+
 ```bash
-git clone https://github.com/YOUR_USERNAME/vocalflow.git
-cd vocalflow/windows
+git clone https://github.com/YOUR_USERNAME/vocalflow-windows.git
+cd vocalflow-windows
 ```
 
 **Option B — Download ZIP:**
+
 1. Download and extract the ZIP
-2. Open a terminal inside the `windows/` folder
+2. Open a terminal inside the extracted folder
 
 ---
 
-### Step 2 — Add your Deepgram API key
+### Step 2 — Add your Deepgram API key(Already added in config)
 
 Open [`src/config.js`](src/config.js) in any text editor and replace the placeholder on line 14:
 
@@ -96,7 +98,7 @@ Double-click the tray icon (or right-click → **Settings**) to open the Setting
 
 ### Deepgram (required)
 
-1. Paste your **Deepgram API key** into the API Key field
+1. Paste your **Deepgram API key**(already added will be shown there) into the API Key field
 2. Click **Save**
 3. Click **Fetch** — this loads the list of available models
 4. Select a model (default: `nova-2-general` — recommended for English)
@@ -105,9 +107,9 @@ Double-click the tray icon (or right-click → **Settings**) to open the Setting
 
 ### Groq (optional — for corrections & translation)
 
-1. Paste your **Groq API key**
+1. Paste your **Groq API key**(already added will be shown there).
 2. Click **Save**
-3. Click **Fetch** to load available models, select one (e.g. `llama3-8b-8192`)
+3. Click **Fetch** to load available models, select one (e.g. `llama-3.1-8b-instant`)
 4. Enable the features you want:
    - **Spelling Correction** — fixes typos
    - **Grammar Correction** — fixes sentence structure
@@ -168,12 +170,12 @@ Press hotkey (2nd time)
 
 ## Tray Icon States
 
-| Color | Meaning |
-|-------|---------|
-| Gray | Idle — ready to record |
-| Red | Recording — listening to your mic |
-| Amber | Transcribing — waiting for Deepgram |
-| Dark red | Error — check terminal for details |
+| Color    | Meaning                             |
+| -------- | ----------------------------------- |
+| Gray     | Idle — ready to record              |
+| Red      | Recording — listening to your mic   |
+| Amber    | Transcribing — waiting for Deepgram |
+| Dark red | Error — check terminal for details  |
 
 ---
 
@@ -189,6 +191,7 @@ Open **Settings** at any time to see your balances:
 ## Resetting Settings
 
 Settings are saved to:
+
 ```
 C:\Users\<you>\AppData\Roaming\vocalflow-windows\settings.json
 ```
@@ -200,9 +203,9 @@ To reset to defaults, delete that file and restart the app. A fresh `settings.js
 ## Project Structure
 
 ```
-windows/
+vocalflow-windows/
 ├── src/
-│   ├── config.js                  ← API keys & app defaults  ← EDIT THIS
+│   ├── config.js                  ← API keys & app defaults
 │   ├── preload.js                 ← Secure IPC bridge (contextBridge)
 │   ├── main/
 │   │   ├── index.js               ← Main process: tray, hotkey, IPC routing
@@ -219,7 +222,7 @@ windows/
 │       ├── settings.js            ← Settings page logic
 │       └── overlay.html           ← Floating pill shown during recording/transcribing
 ├── package.json
-├── .gitignore                     ← Excludes node_modules/, dist/
+├── .gitignore
 └── README.md
 ```
 
@@ -236,30 +239,6 @@ npm run build
 The installer is output to `dist/`. Requires [electron-builder](https://www.electron.build) (already listed in `devDependencies`).
 
 > Note: `assets/icon.ico` must exist before building. See electron-builder docs for icon requirements.
-
----
-
-## Troubleshooting
-
-| Problem | Likely cause | Fix |
-|---------|-------------|-----|
-| Tray icon doesn't appear | Hidden in overflow | Click `^` arrow in taskbar notification area |
-| Hotkey does nothing | Another app owns the shortcut | Open Settings → Hotkey → pick a different one |
-| Text appears in wrong window | Wrong window was focused | Click into the target field **before** pressing hotkey |
-| No text appears at all | Target window lost focus | Don't click anywhere during recording/transcribing |
-| Arabic / Urdu output | Wrong language saved in settings | Open Settings, check Language is `en-US`. Or delete `settings.json` (see Resetting Settings) |
-| "No Deepgram API key" | Key not set | Settings → Deepgram → paste key → Save |
-| Balance shows "Error 401" | Invalid or expired API key | Generate a new key at console.deepgram.com |
-| Microphone not working | Windows privacy block | Windows Settings → Privacy & Security → Microphone → allow desktop apps |
-| Text cut off mid-sentence | Spoke too fast / transcription timeout | Speak slightly slower; pause briefly before pressing stop |
-
----
-
-## Known Limitations
-
-- **Toggle mode only** — hold-to-talk (like the macOS version) is not supported on Windows without low-level keyboard hooks
-- **Groq balance** — not available via Groq's public API; use the dashboard link
-- **Language** — avoid selecting `multi` (code-switching) as the Deepgram language; it can output Arabic/Urdu script for accented English speech. Use `en-US` for English.
 
 ---
 
