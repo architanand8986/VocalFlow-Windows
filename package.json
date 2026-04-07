@@ -1,0 +1,33 @@
+{
+  "name": "vocalflow-windows",
+  "version": "1.0.0",
+  "description": "Voice dictation app for Windows — hold a hotkey, speak, release, text appears at your cursor",
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --x64"
+  },
+  "devDependencies": {
+    "electron": "^41.1.1",
+    "electron-builder": "^26.8.1"
+  },
+  "build": {
+    "appId": "com.vocalflow.windows",
+    "productName": "VocalFlow",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "!**/node_modules/**"
+    ]
+  },
+  "author": "VocalFlow",
+  "license": "MIT"
+}
