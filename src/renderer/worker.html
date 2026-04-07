@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' 'unsafe-inline';
+                 connect-src wss://api.deepgram.com https://api.deepgram.com https://api.groq.com;
+                 media-src *;">
+  <title>VocalFlow Worker</title>
+</head>
+<body>
+  <!-- Hidden worker window: handles audio capture, Deepgram WebSocket, Groq API -->
+  <script src="worker.js"></script>
+</body>
+</html>
